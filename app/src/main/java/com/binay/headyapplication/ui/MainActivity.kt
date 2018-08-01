@@ -1,7 +1,8 @@
-package com.binay.headyapplication
+package com.binay.headyapplication.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.binay.headyapplication.R
 
 class MainActivity : AppCompatActivity() {
 

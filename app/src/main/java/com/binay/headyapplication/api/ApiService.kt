@@ -1,5 +1,6 @@
 package com.binay.headyapplication.api
 
+import com.binay.headyapplication.data.ProductResponse
 import retrofit2.http.GET
 import rx.Single
 
@@ -8,5 +9,5 @@ import rx.Single
  */
 interface ApiService {
     @GET("json")
-    fun getProducts(): Single<String>
+    fun getProducts(): Single<ProductResponse>
 }

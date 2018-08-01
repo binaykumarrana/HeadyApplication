@@ -1,9 +1,12 @@
 package com.binay.headyapplication.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.binay.headyapplication.di.ApiInteractor
 import com.binay.headyapplication.presenter.ProductPresenter
 import com.binay.headyapplication.view.ProductView
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 
 /**
@@ -13,6 +16,7 @@ class ProductPresenterImpl : ProductPresenter {
     private var view: ProductView? = null
     private var compositeSubscription: CompositeSubscription? = null
     private val interactor: ApiInteractor
+    val TAG = ProductPresenterImpl::class.java.name
 
     constructor(interactor: ApiInteractor) {
         this.interactor = interactor
@@ -34,6 +38,14 @@ class ProductPresenterImpl : ProductPresenter {
     }
 
     override fun getProducts() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        compositeSubscription?.add(interactor.getAllCategoriesProducts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result ->
+                    view?.onSuccess(result)
+                }, { throwable: Throwable? ->
+                    Log.d(TAG, " success" + throwable!!.message)
+                    view?.onFailure(true)
+                }))
     }
 }

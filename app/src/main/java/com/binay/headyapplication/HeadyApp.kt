@@ -1,6 +1,7 @@
 package com.binay.headyapplication
 
 import android.app.Application
+import com.binay.headyapplication.di.network.DaggerNetworkComponent
 import com.binay.headyapplication.di.network.NetworkComponent
 import com.binay.headyapplication.di.network.NetworkModule
 import com.binay.headyapplication.util.baseUrl
@@ -15,10 +16,6 @@ class HeadyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         initDagger()
-        var c = RealmConfiguration.Builder()
-        c.name("heady")
-        c.deleteRealmIfMigrationNeeded()
-        Realm.setDefaultConfiguration(c.build())
     }
 
     fun initDagger() {

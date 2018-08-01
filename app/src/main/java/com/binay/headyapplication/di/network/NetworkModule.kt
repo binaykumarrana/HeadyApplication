@@ -58,7 +58,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTaxiApiService(retrofit: Retrofit): ApiService {
+    fun provideProductApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
 

@@ -5,11 +5,17 @@ import android.os.Bundle
 import android.util.Log
 import com.binay.headyapplication.HeadyApp
 import com.binay.headyapplication.R
+import com.binay.headyapplication.data.ProductCategory
 import com.binay.headyapplication.data.ProductResponse
+import com.binay.headyapplication.data.Products
 import com.binay.headyapplication.di.DaggerMainActivityComponent
 import com.binay.headyapplication.presenter.ProductPresenter
 import com.binay.headyapplication.view.ProductView
+import io.realm.Realm
+import io.realm.RealmResults
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), ProductView {
 
@@ -38,8 +44,17 @@ class MainActivity : AppCompatActivity(), ProductView {
         presenter.onDetachView()
     }
 
-    override fun onSuccess(productResponse: ProductResponse) {
-        Log.d(TAG, " success" + productResponse)
+    override fun onSuccess(productResponse: HashMap<ProductCategory, List<Products>>) {
+        var list: ArrayList<String> = ArrayList()
+        Log.d(TAG, " success" + productResponse.size)
+        for (prodcuct in productResponse) {
+            list.add(prodcuct.key.name!!)
+        }
+        val expandableListAdapter = ProductAdapter(this, list, productResponse)
+        expandableListView.setAdapter(expandableListAdapter)
+//        val realm = Realm.getDefaultInstance()
+//        val productList = realm.where(ProductResponse::class.java).findAllAsync()
+//        Log.d(TAG, " realm list" + productList.size)
     }
 
     override fun onFailure(isFailed: Boolean) {

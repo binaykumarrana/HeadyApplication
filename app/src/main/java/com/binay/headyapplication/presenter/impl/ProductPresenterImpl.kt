@@ -2,9 +2,13 @@ package com.binay.headyapplication.presenter.impl
 
 import android.content.Context
 import android.util.Log
+import com.binay.headyapplication.data.ProductCategory
+import com.binay.headyapplication.data.ProductResponse
+import com.binay.headyapplication.data.Products
 import com.binay.headyapplication.di.ApiInteractor
 import com.binay.headyapplication.presenter.ProductPresenter
 import com.binay.headyapplication.view.ProductView
+import io.realm.Realm
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -42,10 +46,26 @@ class ProductPresenterImpl : ProductPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
-                    view?.onSuccess(result)
+                    //writeToRealm(result)
+                    view?.onSuccess(prepareCategoryList(result))
+
                 }, { throwable: Throwable? ->
-                    Log.d(TAG, " success" + throwable!!.message)
                     view?.onFailure(true)
                 }))
+    }
+
+    private fun prepareCategoryList(productResponse: ProductResponse): HashMap<ProductCategory, List<Products>> {
+        var expandableListDetail = HashMap<ProductCategory, List<Products>>()
+        for (product in productResponse.categories) {
+            expandableListDetail[product] = product.products
+        }
+        return expandableListDetail
+    }
+
+    private fun writeToRealm(productResponse: ProductResponse) {
+        /* var realm = Realm.getDefaultInstance()
+         realm.beginTransaction()
+         realm.copyToRealm(productResponse)
+         realm.commitTransaction()*/
     }
 }

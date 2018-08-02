@@ -1,51 +1,54 @@
 package com.binay.headyapplication.data
 
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
+import org.jetbrains.annotations.NotNull
+
 /**
  * Created by binay on 02/08/18.
  */
-data class ProductResponse(
-        val categories: ArrayList<ProductCategory> = ArrayList(),
-        val rankings: ArrayList<Rankings> = ArrayList()
+open class ProductResponse(
+        open var categories: ArrayList<ProductCategory> = ArrayList(),
+        open var rankings: ArrayList<Rankings> = ArrayList(),
+        open var child_categories: ArrayList<Int> = ArrayList()
 ) : java.io.Serializable
 
-data class Rankings(
-        val ranking: String,
-        val products: ArrayList<Product> = ArrayList()
+open class Rankings(
+        open var ranking: String? = null,
+        open var products: ArrayList<Product> = ArrayList()
 ) : java.io.Serializable
 
-data class Product(
-        val id: Int,
-        val view_count: Long,
-        val order_count: Long,
-        val shares: Long
+open class Product(
+        open var id: Int? = null,
+        open var view_count: Long? = null,
+        open var order_count: Long? = null,
+        open var shares: Long? = null
 ) : java.io.Serializable
 
-data class ProductCategory(
-        val id: Int,
-        val name: String,
-        val products: ArrayList<Products> = ArrayList()
-//        val child_categories: ArrayList<ChildCategory> = ArrayList()
-) : java.io.Serializable
-
-//data class ChildCategory() : java.io.Serializable
-
-data class Products(
-        val id: Int,
-        val name: String,
-        val date_added: String,
-        val variants: ArrayList<Variants> = ArrayList(),
-        val tax: Tax
-) : java.io.Serializable
-
-data class Tax(
-        val name: String,
-        val value: Double
+open class ProductCategory(
+        @PrimaryKey open var id: Int? = null,
+        open var name: String? = null,
+        open var products: ArrayList<Products> = ArrayList()
 ) : java.io.Serializable
 
 
-data class Variants(
-        val id: Int,
-        val color: String,
-        val size: Int,
-        val price: Double
+open class Products(
+        open var id: Int? = null,
+        open var name: String? = null,
+        open var date_added: String? = null,
+        open var variants: ArrayList<Variants> = ArrayList(),
+        open var tax: Tax? = null
+) : java.io.Serializable
+
+open class Tax(
+        open var name: String? = null,
+        open var value: Double? = null
+) : java.io.Serializable
+
+
+open class Variants(
+        open var id: Int? = null,
+        open var color: String? = null,
+        open var size: Int? = null,
+        open var price: Double? = null
 ) : java.io.Serializable

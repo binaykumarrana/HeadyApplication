@@ -16,6 +16,15 @@ class HeadyApp : Application() {
     override fun onCreate() {
         super.onCreate()
         initDagger()
+        initRealmConfig()
+    }
+
+    private fun initRealmConfig() {
+        Realm.init(this)
+        var realmConfiguration = RealmConfiguration.Builder()
+        realmConfiguration.name("heady")
+        realmConfiguration.deleteRealmIfMigrationNeeded()
+        Realm.setDefaultConfiguration(realmConfiguration.build())
     }
 
     fun initDagger() {

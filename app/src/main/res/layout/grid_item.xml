@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_16"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/txt_17"
+        tools:text="Jeans" />
+
+    <TextView
+        android:id="@+id/tvProductSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:gravity="center"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="Large" />
+
+    <TextView
+        android:id="@+id/tvProductColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:gravity="center"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="RED" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_4"
+        android:gravity="center"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="234" />
+</LinearLayout>

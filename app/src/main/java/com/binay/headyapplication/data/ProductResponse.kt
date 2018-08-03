@@ -2,7 +2,6 @@ package com.binay.headyapplication.data
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import org.jetbrains.annotations.NotNull
 
 /**
  * Created by binay on 02/08/18.

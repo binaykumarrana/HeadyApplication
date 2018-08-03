@@ -1,14 +1,12 @@
 package com.binay.headyapplication.presenter.impl
 
 import android.content.Context
-import android.util.Log
 import com.binay.headyapplication.data.ProductCategory
 import com.binay.headyapplication.data.ProductResponse
 import com.binay.headyapplication.data.Products
 import com.binay.headyapplication.di.ApiInteractor
 import com.binay.headyapplication.presenter.ProductPresenter
 import com.binay.headyapplication.view.ProductView
-import io.realm.Realm
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
@@ -47,11 +45,42 @@ class ProductPresenterImpl : ProductPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ result ->
                     //writeToRealm(result)
-                    view?.onSuccess(prepareCategoryList(result))
+                    view?.onSuccess(prepareCategoryList(result),  getProductRanking(result))
 
                 }, { throwable: Throwable? ->
                     view?.onFailure(true)
                 }))
+    }
+
+    private fun getProductRanking(result: ProductResponse): HashMap<String, List<Products>> {
+        val rankingGroup = HashMap<Int, List<String>>()
+        val finalProductHashMap = HashMap<String, List<Products>>()
+        for (rank in result.rankings) {
+            finalProductHashMap[rank.ranking!!] = ArrayList<Products>()
+            for (product in rank.products) {
+                if (!rankingGroup.containsKey(product.id!!)) {
+                    val rankList = ArrayList<String>()
+                    rankList.add(rank.ranking!!)
+                    rankingGroup[product.id!!] = rankList
+                } else {
+                    val rankList = rankingGroup[product.id!!] as ArrayList<String>
+                    rankList.add(rank.ranking!!)
+                }
+            }
+        }
+
+        for (category in result.categories) {
+            for (prod in category.products) {
+                for (rankingStr in rankingGroup[prod.id]!!) {
+                    val productList = finalProductHashMap[rankingStr] as ArrayList<Products>
+                    productList.add(prod)
+                    finalProductHashMap[rankingStr] = productList
+                }
+
+            }
+        }
+
+        return finalProductHashMap;
     }
 
     private fun prepareCategoryList(productResponse: ProductResponse): HashMap<ProductCategory, List<Products>> {

@@ -44,11 +44,12 @@ class MainActivity : AppCompatActivity(), ProductView {
         presenter.onDetachView()
     }
 
-    override fun onSuccess(productResponse: HashMap<ProductCategory, List<Products>>) {
-        var list: ArrayList<String> = ArrayList()
-        Log.d(TAG, " success" + productResponse.size)
+    override fun onSuccess(productResponse: HashMap<ProductCategory, List<Products>>, ranking: HashMap<String, List<Products>>) {
+        var list: ArrayList<ProductCategory> = ArrayList()
+        Log.d(TAG, " success" + productResponse.size+"ranking"+ranking)
+
         for (prodcuct in productResponse) {
-            list.add(prodcuct.key.name!!)
+            list.add(prodcuct.key)
         }
         val expandableListAdapter = ProductAdapter(this, list, productResponse)
         expandableListView.setAdapter(expandableListAdapter)

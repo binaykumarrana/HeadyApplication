@@ -8,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.binay.headyapplication.R;
-import com.binay.headyapplication.data.Product;
 import com.binay.headyapplication.data.ProductCategory;
 import com.binay.headyapplication.data.Products;
 
@@ -21,35 +20,36 @@ import java.util.List;
  */
 
 public class ProductAdapter extends BaseExpandableListAdapter {
-    private final HashMap<ProductCategory, List<Products>> foodItems;
+    private final HashMap<ProductCategory, List<Products>> productItems;
     private final Context context;
-    private final ArrayList<String> foodHeader;
+    private final ArrayList<ProductCategory> productHeader;
 
-    public ProductAdapter(Context context, ArrayList<String> foodHeader, HashMap<ProductCategory, List<Products>> footItems) {
+    public ProductAdapter(Context context, ArrayList<ProductCategory> foodHeader, HashMap<ProductCategory, List<Products>> footItems) {
         this.context = context;
-        this.foodHeader = foodHeader;
-        this.foodItems = footItems;
+        this.productHeader = foodHeader;
+        this.productItems = footItems;
     }
 
     @Override
     public int getGroupCount() {
-        return foodHeader.size();
+        return productHeader.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
 
-        return foodItems.get(foodHeader.get(i)) == null ? 0 : foodItems.get(foodHeader.get(i)).size();
+        return productItems.get(productHeader.get(i)) == null ? 0 : productItems.get(productHeader.get(i)).size();
     }
 
     @Override
     public String getGroup(int i) {
-        return foodHeader.get(i);
+        return productHeader.get(i).getName();
     }
 
     @Override
     public Products getChild(int i, int i1) {
-        return foodItems.get(foodHeader.get(i)).get(i1);
+
+        return productItems.get(productHeader.get(i)).get(i1);
     }
 
     @Override

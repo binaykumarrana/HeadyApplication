@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -62,7 +63,6 @@ public class PresenterImpl implements ProductPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
                     saveToLocalStorage(response);
-                    productView.onSuccess(prepareCategoryList(response), getProductRanking(response));
                 }, throwable -> {
                     productView.onFailure(true);
                 }));
@@ -70,16 +70,28 @@ public class PresenterImpl implements ProductPresenter {
 
     private void saveToLocalStorage(Response response) {
         Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.createObject(Response.class);
-        realm.commitTransaction();
-        Log.d("PresenterImpl"," reaml store");
+        realm.executeTransactionAsync(realm1 -> realm1.copyToRealm(response),
+                () -> productView.onSuccess(prepareCategoryList(), getProductRanking()),
+                error -> Log.d("PresenterImpl", " reaml onError" + error.getMessage()));
+
     }
 
-    private Map<String, List<Products>> getProductRanking(Response result) {
+    private RealmResults<Response> fetchLocalData() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        RealmResults<Response> result = realm.where(Response.class).findAllAsync();
+        realm.commitTransaction();
+        realm.close();
+        return result;
+    }
+
+    private Map<String, List<Products>> getProductRanking() {
+        RealmResults<Response> result = fetchLocalData();
+        if (result == null)
+            return null;
         Map<Integer, List<String>> rankingGroup = new HashMap<>();
         Map<String, List<Products>> finalProductHashMap = new HashMap<>();
-        for (Ranking rank : result.getRanking()) {
+        for (Ranking rank : result.get(0).getRanking()) {
             finalProductHashMap.put(rank.getRanking(), new ArrayList<>());
             for (Product product : rank.getProduct()) {
                 if (!rankingGroup.containsKey(product.getId())) {
@@ -92,7 +104,7 @@ public class PresenterImpl implements ProductPresenter {
                 }
             }
         }
-        for (ProductCategory category : result.getCategory()) {
+        for (ProductCategory category : result.get(0).getCategory()) {
             for (Products prod : category.getProducts()) {
                 for (String rankingStr : rankingGroup.get(prod.getId())) {
                     List<Products> productList = finalProductHashMap.get(rankingStr);
@@ -105,9 +117,12 @@ public class PresenterImpl implements ProductPresenter {
         return finalProductHashMap;
     }
 
-    private Map<ProductCategory, List<Products>> prepareCategoryList(Response productResponse) {
+    private Map<ProductCategory, List<Products>> prepareCategoryList() {
+        RealmResults<Response> productResponse = fetchLocalData();
+        if (productResponse == null)
+            return null;
         Map<ProductCategory, List<Products>> expandableListDetail = new HashMap<>();
-        for (ProductCategory product : productResponse.getCategory()) {
+        for (ProductCategory product : productResponse.get(0).getCategory()) {
             expandableListDetail.put(product, product.getProducts());
         }
         return expandableListDetail;

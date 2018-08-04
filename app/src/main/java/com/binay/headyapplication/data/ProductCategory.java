@@ -11,7 +11,6 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class ProductCategory extends RealmObject {
-    @PrimaryKey
     @SerializedName("id")
     Integer id;
     @SerializedName("name")

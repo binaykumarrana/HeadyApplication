@@ -12,6 +12,7 @@ import com.binay.headyapplication.HeadyApp;
 import com.binay.headyapplication.R;
 import com.binay.headyapplication.data.ProductCategory;
 import com.binay.headyapplication.data.Products;
+import com.binay.headyapplication.data.Response;
 import com.binay.headyapplication.di.DaggerMainActivityComponent;
 import com.binay.headyapplication.presenter.ProductPresenter;
 import com.binay.headyapplication.view.ProductView;
@@ -23,6 +24,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class HomeActivity extends AppCompatActivity implements ProductView {
     @Inject
@@ -54,7 +58,6 @@ public class HomeActivity extends AppCompatActivity implements ProductView {
     @Override
     public void onSuccess(@NotNull Map<ProductCategory, ? extends List<? extends Products>> productResponse, @NotNull Map<String, ? extends List<? extends Products>> rankings) {
         swipeRefreshLayout.setRefreshing(false);
-        Log.d("Home", " success" + productResponse.size() + "ranking" + rankings.size());
         List<ProductCategory> list = new ArrayList<>();
         for (Map.Entry m : productResponse.entrySet()) {
             list.add((ProductCategory) m.getKey());

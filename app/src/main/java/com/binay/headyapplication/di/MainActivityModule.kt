@@ -1,7 +1,7 @@
 package com.binay.headyapplication.di
 
 import com.binay.headyapplication.presenter.ProductPresenter
-import com.binay.headyapplication.presenter.impl.ProductPresenterImpl
+import com.binay.headyapplication.presenter.impl.PresenterImpl
 import dagger.Module
 import dagger.Provides
 
@@ -13,6 +13,6 @@ class MainActivityModule {
     @Provides
     @ActivityScope
     fun providePresenter(apiInteractor: ApiInteractor): ProductPresenter{
-        return ProductPresenterImpl(apiInteractor)
+        return PresenterImpl(apiInteractor)
     }
 }

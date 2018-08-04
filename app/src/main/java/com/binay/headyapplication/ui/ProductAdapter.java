@@ -14,17 +14,18 @@ import com.binay.headyapplication.data.Products;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by binay on 03/08/18.
  */
 
 public class ProductAdapter extends BaseExpandableListAdapter {
-    private final HashMap<ProductCategory, List<Products>> productItems;
+    private final Map<ProductCategory, ? extends List<? extends Products>> productItems;
     private final Context context;
-    private final ArrayList<ProductCategory> productHeader;
+    private final List<ProductCategory> productHeader;
 
-    public ProductAdapter(Context context, ArrayList<ProductCategory> foodHeader, HashMap<ProductCategory, List<Products>> footItems) {
+    public ProductAdapter(Context context, List<ProductCategory> foodHeader, Map<ProductCategory, ? extends List<? extends Products>> footItems) {
         this.context = context;
         this.productHeader = foodHeader;
         this.productItems = footItems;
@@ -82,10 +83,12 @@ public class ProductAdapter extends BaseExpandableListAdapter {
     public View getChildView(int i, int i1, boolean b, View convertView, ViewGroup viewGroup) {
         Products item = getChild(i, i1);
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.group_category_item, viewGroup, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.list_item_subcategory, viewGroup, false);
         }
-        TextView textView = convertView.findViewById(R.id.tvGroupItem);
-        textView.setText(item.getName());
+        ((TextView) convertView.findViewById(R.id.tvProdName)).setText(item.getName());
+//        ((TextView)convertView.findViewById(R.id.tvProductSize)).setText(""+item.getVariants().get(0).getSize());
+//        ((TextView) convertView.findViewById(R.id.tvProductColor)).setText(""+item.getVariants().get(0).getColor());
+//        ((TextView)convertView.findViewById(R.id.tvProductPrice)).setText(""+item.getVariants().get(0).getPrice());
         return convertView;
     }
 

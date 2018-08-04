@@ -1,7 +1,7 @@
 package com.binay.headyapplication.di
 
-import com.binay.headyapplication.ui.MainActivity
 import com.binay.headyapplication.di.network.NetworkComponent
+import com.binay.headyapplication.ui.HomeActivity
 import dagger.Component
 
 /**
@@ -10,5 +10,5 @@ import dagger.Component
 @ActivityScope
 @Component(dependencies = arrayOf(NetworkComponent::class), modules = arrayOf(MainActivityModule::class))
 interface MainActivityComponent {
-    fun inject(mainActivity: MainActivity)
+    fun inject(mainActivity: HomeActivity)
 }

@@ -16,8 +16,8 @@ public class CustomViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemVie
     val productPrice = itemView!!.tvProductName
     fun bindViews(context: Context, prodctus: Products) {
         productName.text = prodctus.name
-        productSize.text = prodctus.variants[0].size.toString()
-        productColor.text = prodctus.variants[0].color
-        productPrice.text = prodctus.variants[0].price.toString()
+//        productSize.text = prodctus.variants[0]!!.size.toString()
+//        productColor.text = prodctus.variants[0]!!.color
+//        productPrice.text = prodctus.variants[0]!!.price.toString()
     }
 }

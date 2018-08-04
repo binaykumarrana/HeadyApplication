@@ -5,13 +5,46 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvSubCatItem"
+        android:id="@+id/tvProdName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/margin_8"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingTop="@dimen/margin_8"
+        android:paddingTop="@dimen/margin_12"
         android:textColor="@color/black_87"
         android:textSize="@dimen/txt_14"
         tools:text="kjfnjknff" />
+
+    <TextView
+        android:id="@+id/tvProductSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="Large" />
+
+    <TextView
+        android:id="@+id/tvProductColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="RED" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8"
+        android:gravity="center"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="@color/black_87"
+        android:textSize="@dimen/txt_14"
+        tools:text="234" />
 </LinearLayout>

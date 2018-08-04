@@ -16,33 +16,5 @@
         android:textSize="@dimen/txt_17"
         tools:text="Jeans" />
 
-    <TextView
-        android:id="@+id/tvProductSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_4"
-        android:gravity="center"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/txt_14"
-        tools:text="Large" />
 
-    <TextView
-        android:id="@+id/tvProductColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_4"
-        android:gravity="center"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/txt_14"
-        tools:text="RED" />
-
-    <TextView
-        android:id="@+id/tvProductPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_4"
-        android:gravity="center"
-        android:textColor="@color/black_87"
-        android:textSize="@dimen/txt_14"
-        tools:text="234" />
 </LinearLayout>

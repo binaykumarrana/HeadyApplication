@@ -9,10 +9,11 @@
         android:id="@+id/tvGroupItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_8"
+        android:paddingBottom="@dimen/margin_12"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:paddingTop="@dimen/margin_8"
-        android:textSize="@dimen/txt_14"
+        android:paddingTop="@dimen/margin_12"
         android:textColor="@android:color/black"
+        android:textSize="@dimen/txt_14"
+        android:textStyle="bold"
         tools:text="knfjkbggg" />
 </LinearLayout>

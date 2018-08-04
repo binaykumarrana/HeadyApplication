@@ -13,6 +13,17 @@ import io.realm.RealmConfiguration
  */
 class HeadyApp : Application() {
     private var networkComponent: NetworkComponent? = null
+
+    companion object {
+        private var instance: HeadyApp? = null
+
+    }
+    public fun getInstance(): HeadyApp {
+        if (instance == null)
+            instance = HeadyApp()
+        return instance!!
+    }
+
     override fun onCreate() {
         super.onCreate()
         initDagger()
@@ -27,13 +38,13 @@ class HeadyApp : Application() {
         Realm.setDefaultConfiguration(realmConfiguration.build())
     }
 
-    fun initDagger() {
+    public fun initDagger() {
         networkComponent = DaggerNetworkComponent.builder()
                 .networkModule(NetworkModule(baseUrl))
                 .build()
     }
 
-    fun getNetworkComponent(): NetworkComponent? {
+    public fun getNetworkComponent(): NetworkComponent? {
         return networkComponent
     }
 }

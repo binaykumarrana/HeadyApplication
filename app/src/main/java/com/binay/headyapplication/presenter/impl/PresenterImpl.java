@@ -2,7 +2,9 @@ package com.binay.headyapplication.presenter.impl;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.binay.headyapplication.R;
 import com.binay.headyapplication.data.Product;
 import com.binay.headyapplication.data.ProductCategory;
 import com.binay.headyapplication.data.Products;
@@ -10,6 +12,7 @@ import com.binay.headyapplication.data.Ranking;
 import com.binay.headyapplication.data.Response;
 import com.binay.headyapplication.di.ApiInteractor;
 import com.binay.headyapplication.presenter.ProductPresenter;
+import com.binay.headyapplication.util.HeadyUtilsKt;
 import com.binay.headyapplication.view.ProductView;
 
 import org.jetbrains.annotations.NotNull;
@@ -64,6 +67,7 @@ public class PresenterImpl implements ProductPresenter {
                 .subscribe(response -> {
                     saveToLocalStorage(response);
                 }, throwable -> {
+                    Log.d("PresenterImpl", " throwable" + throwable.getMessage());
                     productView.onFailure(true);
                 }));
     }
@@ -71,8 +75,12 @@ public class PresenterImpl implements ProductPresenter {
     private void saveToLocalStorage(Response response) {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransactionAsync(realm1 -> realm1.copyToRealm(response),
-                () -> productView.onSuccess(prepareCategoryList(), getProductRanking()),
-                error -> Log.d("PresenterImpl", " reaml onError" + error.getMessage()));
+                () -> {
+                    productView.onSuccess(prepareCategoryList(), getProductRanking());
+                },
+                error -> {
+                    Log.d("PresenterImpl", " reaml onError" + error.getMessage());
+                });
 
     }
 
@@ -81,13 +89,12 @@ public class PresenterImpl implements ProductPresenter {
         realm.beginTransaction();
         RealmResults<Response> result = realm.where(Response.class).findAllAsync();
         realm.commitTransaction();
-        realm.close();
         return result;
     }
 
     private Map<String, List<Products>> getProductRanking() {
         RealmResults<Response> result = fetchLocalData();
-        if (result == null)
+        if (result == null || result.get(0) == null)
             return null;
         Map<Integer, List<String>> rankingGroup = new HashMap<>();
         Map<String, List<Products>> finalProductHashMap = new HashMap<>();
@@ -119,7 +126,7 @@ public class PresenterImpl implements ProductPresenter {
 
     private Map<ProductCategory, List<Products>> prepareCategoryList() {
         RealmResults<Response> productResponse = fetchLocalData();
-        if (productResponse == null)
+        if (productResponse == null || productResponse.get(0) == null)
             return null;
         Map<ProductCategory, List<Products>> expandableListDetail = new HashMap<>();
         for (ProductCategory product : productResponse.get(0).getCategory()) {

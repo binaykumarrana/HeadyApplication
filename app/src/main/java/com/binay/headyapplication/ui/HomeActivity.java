@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.binay.headyapplication.HeadyApp;
 import com.binay.headyapplication.R;
@@ -15,6 +16,7 @@ import com.binay.headyapplication.data.Products;
 import com.binay.headyapplication.data.Response;
 import com.binay.headyapplication.di.DaggerMainActivityComponent;
 import com.binay.headyapplication.presenter.ProductPresenter;
+import com.binay.headyapplication.util.HeadyUtilsKt;
 import com.binay.headyapplication.view.ProductView;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +30,7 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class HomeActivity extends AppCompatActivity implements ProductView {
+public class HomeActivity extends AppCompatActivity implements ProductView, SwipeRefreshLayout.OnRefreshListener {
     @Inject
     ProductPresenter presenter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -45,6 +47,10 @@ public class HomeActivity extends AppCompatActivity implements ProductView {
     private void initViews() {
         expandableListView = findViewById(R.id.expandableListView);
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.orange),
+                getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.green),
+                getResources().getColor(R.color.colorAccent));
         swipeRefreshLayout.setRefreshing(true);
         presenter.onAttachView(HomeActivity.this, this);
     }
@@ -58,6 +64,14 @@ public class HomeActivity extends AppCompatActivity implements ProductView {
     @Override
     public void onSuccess(@NotNull Map<ProductCategory, ? extends List<? extends Products>> productResponse, @NotNull Map<String, ? extends List<? extends Products>> rankings) {
         swipeRefreshLayout.setRefreshing(false);
+        if (productResponse == null) {
+            Toast.makeText(this, getResources().getString(R.string.some_issue), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (rankings == null) {
+            Toast.makeText(this, getResources().getString(R.string.some_issue), Toast.LENGTH_SHORT).show();
+            return;
+        }
         List<ProductCategory> list = new ArrayList<>();
         for (Map.Entry m : productResponse.entrySet()) {
             list.add((ProductCategory) m.getKey());
@@ -68,6 +82,11 @@ public class HomeActivity extends AppCompatActivity implements ProductView {
 
     @Override
     public void onFailure(boolean isFailed) {
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onRefresh() {
         swipeRefreshLayout.setRefreshing(false);
     }
 }

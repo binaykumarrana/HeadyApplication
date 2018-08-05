@@ -149,7 +149,7 @@ public class ProductAdapter extends BaseExpandableListAdapter {
         } else {
             spinner.setVisibility(View.GONE);
         }
-        priceText.setText("Price: " + productPrice.get(0));
+        priceText.setText("Price: " + context.getResources().getString(R.string.Rs) + productPrice.get(0));
         ArrayAdapter<Integer> dataAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, productSize);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -157,7 +157,7 @@ public class ProductAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 //                Integer item = (Integer) adapterView.getItemAtPosition(position);
-                priceText.setText("Price: " + productPrice.get(position));
+                priceText.setText("Price: " + context.getResources().getString(R.string.Rs) + productPrice.get(position));
             }
 
             @Override

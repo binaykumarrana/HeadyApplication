@@ -3,4 +3,5 @@
     <string name="no_internet">Please, check your device network connection.</string>
     <string name="some_issue">Some problem occurred, please try later.</string>
     <string name="spinner_title">Size</string>
+    <string name="Rs">\u20B9</string>
 </resources>

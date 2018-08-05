@@ -32,13 +32,15 @@ import java.util.Set;
 
 public class ProductAdapter extends BaseExpandableListAdapter {
     private final Map<ProductCategory, ? extends List<? extends Products>> productItems;
+    private final Map<String, ? extends List<? extends Products>> ranking;
     private final Context context;
     private final List<ProductCategory> productHeader;
 
-    public ProductAdapter(Context context, List<ProductCategory> foodHeader, Map<ProductCategory, ? extends List<? extends Products>> footItems) {
+    public ProductAdapter(Context context, List<ProductCategory> foodHeader, Map<ProductCategory, ? extends List<? extends Products>> footItems, Map<String, ? extends List<? extends Products>> rankings) {
         this.context = context;
         this.productHeader = foodHeader;
         this.productItems = footItems;
+        this.ranking = rankings;
     }
 
     @Override
@@ -96,6 +98,18 @@ public class ProductAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.list_item_subcategory, viewGroup, false);
         }
         ((TextView) convertView.findViewById(R.id.tvProdName)).setText(item.getName());
+        if (item.getShareCount() != null)
+            ((TextView) convertView.findViewById(R.id.tvShared)).setText("" + item.getShareCount());
+        else
+            ((TextView) convertView.findViewById(R.id.tvShared)).setText("0");
+        if (item.getViewCount() != null)
+            ((TextView) convertView.findViewById(R.id.tvViewed)).setText("" + item.getViewCount());
+        else
+            ((TextView) convertView.findViewById(R.id.tvViewed)).setText("0");
+        if (item.getOrderCount() != null)
+            ((TextView) convertView.findViewById(R.id.tvOrdered)).setText("" + item.getOrderCount());
+        else
+            ((TextView) convertView.findViewById(R.id.tvOrdered)).setText("0");
         TextView priceText = convertView.findViewById(R.id.tvProductPrice);
         LinearLayout colorLayout = convertView.findViewById(R.id.llProductColor);
         colorLayout.removeAllViews();

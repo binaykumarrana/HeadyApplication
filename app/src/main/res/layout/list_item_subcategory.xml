@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/margin_4"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_4"
     android:orientation="vertical">
 
     <TextView
@@ -48,4 +48,46 @@
         android:textColor="@color/black_87"
         android:textSize="@dimen/txt_14"
         tools:text="Large" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft">
+
+        <TextView
+            android:id="@+id/tvViewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_visibile"
+            android:drawablePadding="@dimen/margin_8"
+            android:drawableStart="@drawable/ic_visibile"
+            android:gravity="center"
+            android:textColor="@color/black_87"
+            tools:text="64844" />
+
+        <TextView
+            android:id="@+id/tvShared"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:drawableLeft="@drawable/ic_share"
+            android:drawablePadding="@dimen/margin_8"
+            android:drawableStart="@drawable/ic_share"
+            android:gravity="center"
+            android:textColor="@color/black_87"
+            tools:text="64844" />
+
+        <TextView
+            android:id="@+id/tvOrdered"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_24"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:drawableLeft="@drawable/order"
+            android:drawablePadding="@dimen/margin_8"
+            android:drawableStart="@drawable/order"
+            android:gravity="center"
+            android:textColor="@color/black_87"
+            tools:text="64844" />
+    </LinearLayout>
 </LinearLayout>

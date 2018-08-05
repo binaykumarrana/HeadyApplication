@@ -12,11 +12,11 @@ import io.realm.annotations.PrimaryKey;
 
 public class ProductCategory extends RealmObject {
     @SerializedName("id")
-    Integer id;
+    private Integer id;
     @SerializedName("name")
-    String name;
+    private String name;
     @SerializedName("products")
-    RealmList<Products> products;
+    private RealmList<Products> products;
 
     public Integer getId() {
         return id;

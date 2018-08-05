@@ -11,11 +11,11 @@ import io.realm.RealmObject;
 
 public class Response extends RealmObject {
     @SerializedName("categories")
-    RealmList<ProductCategory> category;
+    private  RealmList<ProductCategory> category;
     @SerializedName("rankings")
-    RealmList<Ranking> ranking;
+    private RealmList<Ranking> ranking;
     @SerializedName("child_categories")
-    RealmList<ProductCategory> childCategory;
+    private RealmList<ProductCategory> childCategory;
 
     public RealmList<ProductCategory> getCategory() {
         return category;

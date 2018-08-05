@@ -10,13 +10,13 @@ import io.realm.RealmObject;
 
 public class Variants extends RealmObject {
     @SerializedName("id")
-    Integer id;
+    private Integer id;
     @SerializedName("color")
-    String color;
+    private String color;
     @SerializedName("size")
-    Integer size;
+    private Integer size;
     @SerializedName("price")
-    Double price;
+    private Double price;
 
     public Integer getId() {
         return id;

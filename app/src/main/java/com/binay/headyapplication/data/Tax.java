@@ -10,9 +10,9 @@ import io.realm.RealmObject;
 
 public class Tax extends RealmObject {
     @SerializedName("name")
-    String name;
+    private String name;
     @SerializedName("value")
-    Double value;
+    private Double value;
 
     public String getName() {
         return name;

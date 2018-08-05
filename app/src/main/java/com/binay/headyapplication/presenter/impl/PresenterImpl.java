@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -67,14 +68,24 @@ public class PresenterImpl implements ProductPresenter {
                 .subscribe(response -> {
                     saveToLocalStorage(response);
                 }, throwable -> {
-                    Log.d("PresenterImpl", " throwable" + throwable.getMessage());
                     productView.onFailure(true);
                 }));
     }
 
     private void saveToLocalStorage(Response response) {
         Realm realm = Realm.getDefaultInstance();
-        realm.executeTransactionAsync(realm1 -> realm1.copyToRealm(response),
+        for (ProductCategory productCategory : response.getCategory()) {
+            for (Products products : productCategory.getProducts()) {
+                Log.d("PresenterImpl", " share" + getShareCount(response.getRanking(), products.getId()) +
+                        "order" + getOrderCount(response.getRanking(), products.getId()));
+                products.setShareCount(getShareCount(response.getRanking(), products.getId()));
+                products.setViewCount(getViewCount(response.getRanking(), products.getId()));
+                products.setOrderCount(getOrderCount(response.getRanking(), products.getId()));
+            }
+        }
+        realm.executeTransactionAsync(realm1 -> {
+                    realm1.copyToRealm(response);
+                },
                 () -> {
                     productView.onSuccess(prepareCategoryList(), getProductRanking());
                 },
@@ -92,6 +103,11 @@ public class PresenterImpl implements ProductPresenter {
         return result;
     }
 
+    /**
+     * This method will give direct ranking based list of products
+     * So if UI need to display product based on Ranking we can use directly this map and
+     * for each rank all list of product can be shown
+     */
     private Map<String, List<Products>> getProductRanking() {
         RealmResults<Response> result = fetchLocalData();
         if (result == null || result.get(0) == null)
@@ -124,14 +140,67 @@ public class PresenterImpl implements ProductPresenter {
         return finalProductHashMap;
     }
 
+    /**
+     * This method ll return map which will have category and product list of each categry
+     * This map can be directly used to show data if UI display based on Expandable listview
+     * In any other UI case above ranking method map can use
+     */
     private Map<ProductCategory, List<Products>> prepareCategoryList() {
         RealmResults<Response> productResponse = fetchLocalData();
         if (productResponse == null || productResponse.get(0) == null)
             return null;
         Map<ProductCategory, List<Products>> expandableListDetail = new HashMap<>();
-        for (ProductCategory product : productResponse.get(0).getCategory()) {
-            expandableListDetail.put(product, product.getProducts());
+        for (ProductCategory productCategory : productResponse.get(0).getCategory()) {
+            expandableListDetail.put(productCategory, productCategory.getProducts());
         }
         return expandableListDetail;
     }
+
+
+    /**
+     * Method to return view count of each product // just fix position passing to pick rnking list it souldn't
+     */
+    private Long getViewCount(RealmList<Ranking> ranking, Integer id) {
+        if (ranking.get(0) == null || ranking.get(0).getProduct().isEmpty())
+            return 0L;
+        RealmList<Product> productList = ranking.get(0).getProduct();
+        for (Product product : productList) {
+            if (product.getId().equals(id)) {
+                return product.getViewCount();
+            }
+        }
+        return 0L;
+    }
+
+    /**
+     * Method to return getOrderCount  of each product
+     */
+    private Long getOrderCount(RealmList<Ranking> ranking, Integer id) {
+        if (ranking.get(1) == null || ranking.get(1).getProduct().isEmpty())
+            return 0L;
+        RealmList<Product> productList = ranking.get(1).getProduct();
+        for (Product product : productList) {
+            if (product.getId().equals(id)) {
+                return product.getOrderCount();
+            }
+        }
+        return 0L;
+    }
+
+    /**
+     * Method to return getShareCount of each product
+     */
+    private Long getShareCount(RealmList<Ranking> ranking, Integer id) {
+        if (ranking.get(2) == null || ranking.get(2).getProduct().isEmpty())
+            return 0L;
+        RealmList<Product> productList = ranking.get(2).getProduct();
+        for (Product product : productList) {
+            if (product.getId().equals(id)) {
+                return product.getShares();
+            }
+        }
+        return 0L;
+    }
+
+
 }

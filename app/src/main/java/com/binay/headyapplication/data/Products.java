@@ -11,15 +11,43 @@ import io.realm.RealmObject;
 
 public class Products extends RealmObject{
     @SerializedName("id")
-    Integer id;
+    private Integer id;
     @SerializedName("name")
-    String name;
+    private String name;
     @SerializedName("date_added")
-    String dateAdded;
+    private String dateAdded;
     @SerializedName("variants")
-    RealmList<Variants> varients;
+    private RealmList<Variants> varients;
     @SerializedName("tax")
-    Tax tax;
+    private Tax tax;
+
+    private Long viewCount;
+    private Long shareCount;
+    private Long orderCount;
+
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public Long getShareCount() {
+        return shareCount;
+    }
+
+    public void setShareCount(Long shareCount) {
+        this.shareCount = shareCount;
+    }
+
+    public Long getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(Long orderCount) {
+        this.orderCount = orderCount;
+    }
 
     public Integer getId() {
         return id;

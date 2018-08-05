@@ -10,13 +10,13 @@ import io.realm.RealmObject;
 
 public class Product extends RealmObject {
     @SerializedName("id")
-    Integer id;
+    private Integer id;
     @SerializedName("view_count")
-    Long viewCount;
+    private Long viewCount;
     @SerializedName("order_count")
-    Long orderCount;
+    private Long orderCount;
     @SerializedName("shares")
-    Long shares;
+    private Long shares;
 
     public Integer getId() {
         return id;

@@ -11,9 +11,9 @@ import io.realm.RealmObject;
 
 public class Ranking extends RealmObject {
     @SerializedName("ranking")
-    String ranking;
+    private String ranking;
     @SerializedName("products")
-    RealmList<Product> Product;
+    private RealmList<Product> Product;
 
     public String getRanking() {
         return ranking;

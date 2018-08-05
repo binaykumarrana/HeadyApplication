@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity implements ProductView, Swip
         for (Map.Entry m : productResponse.entrySet()) {
             list.add((ProductCategory) m.getKey());
         }
-        ExpandableListAdapter expandableListAdapter = new ProductAdapter(this, list, productResponse);
+        ExpandableListAdapter expandableListAdapter = new ProductAdapter(this, list, productResponse,rankings);
         expandableListView.setAdapter(expandableListAdapter);
     }
 

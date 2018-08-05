@@ -24,4 +24,5 @@
     <dimen name="rvHeight">200dp</dimen>
     <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_10">10dp</dimen>
+    <dimen name="item_ht">150dp</dimen>
 </resources>

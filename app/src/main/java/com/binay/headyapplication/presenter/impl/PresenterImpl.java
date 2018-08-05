@@ -76,8 +76,6 @@ public class PresenterImpl implements ProductPresenter {
         Realm realm = Realm.getDefaultInstance();
         for (ProductCategory productCategory : response.getCategory()) {
             for (Products products : productCategory.getProducts()) {
-                Log.d("PresenterImpl", " share" + getShareCount(response.getRanking(), products.getId()) +
-                        "order" + getOrderCount(response.getRanking(), products.getId()));
                 products.setShareCount(getShareCount(response.getRanking(), products.getId()));
                 products.setViewCount(getViewCount(response.getRanking(), products.getId()));
                 products.setOrderCount(getOrderCount(response.getRanking(), products.getId()));

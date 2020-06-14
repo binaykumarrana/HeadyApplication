@@ -1,10 +1,8 @@
 package com.binay.headyapplication.ui;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -13,10 +11,8 @@ import com.binay.headyapplication.HeadyApp;
 import com.binay.headyapplication.R;
 import com.binay.headyapplication.data.ProductCategory;
 import com.binay.headyapplication.data.Products;
-import com.binay.headyapplication.data.Response;
 import com.binay.headyapplication.di.DaggerMainActivityComponent;
 import com.binay.headyapplication.presenter.ProductPresenter;
-import com.binay.headyapplication.util.HeadyUtilsKt;
 import com.binay.headyapplication.view.ProductView;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,9 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class HomeActivity extends AppCompatActivity implements ProductView, SwipeRefreshLayout.OnRefreshListener {
     @Inject
